@@ -10,6 +10,15 @@ Before you can use this Terraform code, you must have the following:
 - Azure CLI installed on your local machine
 - Terraform installed on your local machine
 
+## Variables
+
+The following variables can be set in `main.tf`:
+
+| Variable   | Description                                                 | Default Value     |
+| ---------- | ----------------------------------------------------------- | ----------------- |
+| `prefix`   | A prefix to add to all resource names to ensure uniqueness. | ----------------- |
+| `location` | The Azure region in which to create the resources.          | `westeurope`      |
+
 ## Lifecycle
 
 The Terraform code in this repository is intended to be used once to bootstrap a storage account for storing Terraform state. Once the storage account has been created, you should update your Terraform configuration to use the new storage account as a backend. Take note of the lifecycle block in `azurerm_storage_account`:
@@ -46,13 +55,6 @@ terraform {
   }
 }
 ```
-
-## Variables
-
-The following variables can be set in `main.tf`:
-
-- `prefix`: A prefix to add to all resource names to ensure uniqueness. Default is `tfstate`.
-- `location`: The Azure region in which to create the resources. Default is `westeurope`.
 
 ## Contributing
 
