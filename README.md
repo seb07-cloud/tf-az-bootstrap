@@ -30,7 +30,7 @@ This block prevents the storage account from being destroyed by Terraform. This 
 2. Open a terminal and navigate to the cloned repository.
 3. Run `az login` to authenticate with your Azure subscription.
 4. Run `terraform init` to initialize the Terraform working directory.
-5. Open `main.tf` and update the `prefix` variable to a unique value.
+5. Open `main.tf` and update the `prefix` variable to a value of your choosing, the random provider will append a random string to the prefix to ensure uniqueness.
 6. Run `terraform plan` to preview the resources that will be created.
 7. Run `terraform apply` to create the resources.
 8. Take note of the output values for `storage_account_name`,`container_name`, `resource_group_name`, and `primary_access_key`, these will be used in your Terraform configuration.
