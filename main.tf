@@ -15,33 +15,27 @@ provider "azurerm" {
   features {}
 }
 
-variable "prefix" {
-  type    = string
-  default = "tfstate"
-}
-
-variable "location" {
-  type    = string
-  default = "westeurope"
-}
-
 resource "random_string" "random_id" {
   keepers = {
-    # Generate a new ID only when a new resource group is created
     resource_group = azurerm_resource_group.resource_group.name
   }
 
-  length  = 8
+  length  = 3
   special = false
 }
 
+locals {
+  location = lookup(var.location_map, var.location)
+}
+
 resource "azurerm_resource_group" "resource_group" {
-  name     = "rg-${var.prefix}"
-  location = location
+  name     = "rg-${var.suffix}-${var.environment}-${local.location}-001"
+  location = var.location
 }
 
 resource "azurerm_storage_account" "storage_account" {
-  name                      = "${var.prefix}${lower(random_string.random_id.result)}"
+  depends_on                = [azurerm_resource_group.resource_group]
+  name                      = "sa${var.suffix}${var.environment}${local.location}${lower(random_string.random_id.result)}"
   resource_group_name       = azurerm_resource_group.resource_group.name
   location                  = azurerm_resource_group.resource_group.location
   account_tier              = "Standard"
